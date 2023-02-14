@@ -2,45 +2,38 @@ import { Time } from "./Time";
 import React, { useState } from "react";
 
 function App() {
-  const [workTime, setWorkTime] = useState("");
-  const [restTime, setRestTime] = useState("");
+  const [workTime, setWorkTime] = useState(25);
+  const [restTime, setRestTime] = useState(5);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleConfirm = (event) => {
     event.preventDefault();
-
-    console.log(`Work time: ${workTime}`);
-    console.log(`Rest time: ${restTime}`);
-  };
-
-  const handleWorkTimeChange = (event) => {
-    setWorkTime(event.target.value);
-  };
-
-  const handleRestTimeChange = (event) => {
-    setRestTime(event.target.value);
+    setIsConfirmed(true);
   };
   return (
     <div>
       <div class="flex items-stretch">
-        <form onSubmit={handleSubmit}>
-          <label for="workt">Work time:</label>
+        <form onSubmit={handleConfirm}>
+          <label htmlFor="workt">Work time:</label>
           <input
             type="number"
             id="workt"
             name="workt"
-            onChange={handleWorkTimeChange}
+            value={workTime}
+            onChange={(event) => setWorkTime(event.target.value)}
           />
-          <label for="restt">Rest time:</label>
+          <label htmlFor="restt">Rest time:</label>
           <input
             type="number"
             id="restt"
             name="restt"
-            onChange={handleRestTimeChange}
+            value={restTime}
+            onChange={(event) => setRestTime(event.target.value)}
           />
           <button type="submit">Confirm</button>
         </form>
       </div>
-      <Time></Time>
+      {isConfirmed && <Time work={workTime} rest={restTime} />}
     </div>
   );
 }
